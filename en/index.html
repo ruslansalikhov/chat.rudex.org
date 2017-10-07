@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <link rel="stylesheet" type="text/css" href="css/chatbro.css">
+    <script type="text/javascript" src="/libs/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jQuery_Easing_Plugin.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>RuDEX TrollBox</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+<script type="text/javascript">
+    function ChatbroLoader(chats, async) {
+        async = async !== false;
+        var params = {
+            embedChatsParameters: chats instanceof Array ? chats : [chats],
+            needLoadCode: typeof Chatbro === 'undefined'
+        };
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.onload = function () {
+            eval(xhr.responseText)
+        };
+        xhr.onerror = function () {
+            console.error('Chatbro loading error')
+        };
+        xhr.open('POST', 'https://www.chatbro.com/embed_chats/', async);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send('parameters=' + encodeURIComponent(JSON.stringify(params)));
+    }
+    ChatbroLoader([{
+        encodedChatId: '5Etn',
+        containerDivId: 'chatDiv',
+        allowMoveChat: false,
+        allowMinimizeChat: false,
+        chatState: 'maximized',
+        siteDomain: 'chat.rudex.org',
+        chatHeight: '100%',
+        chatWidth: '100%',
+        signature: '11b9e0bca1cc69027280bd0accbc9f5b',
+        allowDefaultInvite: false,
+        menuItems: [{
+            url: "https://t.me/rudextrollbox_en",
+            title: "Telegram",
+            iconUrl: "https://www.chatbro.com/images/telegram_logo.png"
+        }]
+    }]);
+</script>
+<style type="text/css">.chatbro_body, .chatbro_bottom_border {
+    border: none !important;
+}</style>
+<div id="chatDiv" style="height: 100%; width: 100%"></div>
+</body>
+</html>
+
