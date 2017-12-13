@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" dir="ltr">
 <head>
-    <link rel="stylesheet" type="text/css" href="css/chatbro.css">
+    <link rel="stylesheet" type="text/css" href="/css/chatbro.css">
     <script type="text/javascript" src="/libs/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="/js/jQuery_Easing_Plugin.min.js"></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,29 +9,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>RuDEX TrollBox</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
 <body>
-<script type="text/javascript">
+<script id="chatBroEmbedCode">
+    /* Chatbro Widget Embed Code Start */
     function ChatbroLoader(chats, async) {
-        async = async !== false;
+        async = !1 !== async;
         var params = {
             embedChatsParameters: chats instanceof Array ? chats : [chats],
-            needLoadCode: typeof Chatbro === 'undefined'
+            lang: navigator.language || navigator.userLanguage,
+            needLoadCode: 'undefined' == typeof Chatbro,
+            embedParamsVersion: localStorage.embedParamsVersion,
+            chatbroScriptVersion: localStorage.chatbroScriptVersion
+        },
+        xhr = new XMLHttpRequest;
+        xhr.withCredentials = !0;
+        xhr.onload = function() {
+            eval(xhr.responseText);
         };
-        var xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-        xhr.onload = function () {
-            eval(xhr.responseText)
-        };
-        xhr.onerror = function () {
+        xhr.onerror = function() {
             console.error('Chatbro loading error')
         };
-        xhr.open('POST', 'https://www.chatbro.com/embed_chats/', async);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send('parameters=' + encodeURIComponent(JSON.stringify(params)));
+        xhr.open('GET', '//www.chatbro.com/embed.js?' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(params)))), async);
+        xhr.send();
     }
-    ChatbroLoader([{
+    /* Chatbro Widget Embed Code End */
+    ChatbroLoader({
         encodedChatId: '5Etn',
         containerDivId: 'chatDiv',
         allowMoveChat: false,
@@ -47,7 +52,7 @@
             title: "Telegram",
             iconUrl: "https://www.chatbro.com/images/telegram_logo.png"
         }]
-    }]);
+    });
 </script>
 <style type="text/css">.chatbro_body, .chatbro_bottom_border {
     border: none !important;
